@@ -2,14 +2,13 @@
 name: Study Templete
 about: 학습일지 입니다.
 title: "[Study] 키포인트"
-labels: ''
-assignees: ''
-
+labels: ""
+assignees: ""
 ---
 
 # 🔎오늘의 Key-Point
 
-1. 
+1. 리액트의 기초를 배웠다.
 
 ---
 
