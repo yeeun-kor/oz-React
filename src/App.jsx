@@ -1,35 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const people = [
+    {
+      id: 0,
+      name: '라이언',
+      profession: 'mathematician',
+    },
+    {
+      id: 1,
+      name: '어피치',
+      profession: 'chemist',
+    },
+    {
+      id: 2,
+      name: '제이지',
+      profession: 'physicist',
+    },
+    {
+      id: 3,
+      name: '춘식이',
+      profession: 'chemist',
+    },
+    {
+      id: 4,
+      name: '콘',
+      profession: 'astrophysicist',
+    },
+  ];
+  const chemist = people
+    .filter((person) => person.profession === 'chemist')
+    //여기까지 하면, chemist인 객체가 나옴
+    //근데 우린 객체만 띨롱~ 나오는게 아니라, 각 객체의 요소를 꺼내서 순회할거임
+    //map으로 돌려버렷
 
+    .map((chemist) => (
+      //이렇게 map으로 돌리면
+      /* 아래처럼 띨롱 나옴!
+    우리는 여기서 이름만 뽑아서 li로 설정할것
+    이때 map으로 접근한 애는 무조건 key프로퍼티 설정하자.
+     {
+      id: 3,
+      name: "춘식이",
+      profession: "chemist",
+    }
+    */
+      <li key={chemist.id}>{chemist.name}</li>
+    ));
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <ul>{chemist}</ul>
+    </div>
+  );
 }
-
-export default App
