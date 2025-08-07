@@ -1,25 +1,32 @@
-import "./App.css";
-import { v4 as uuidv4 } from "uuid"; //uuid설치하여서 create UUID
-function App() {
-  const datas = [
-    { id: uuidv4(), name: "John", age: 20 },
-    { id: uuidv4(), name: "Bob", age: 30 },
-    { id: uuidv4(), name: "Jane", age: 35 },
-    { id: uuidv4(), name: "Alice", age: 29 },
-  ];
+import { useEffect, useState } from "react";
+
+const someVar = "test";
+const unchangedValue = "hello";
+// const로 저장 시 자동으로 변경되는지 체크
+var x = 1;
+
+export default function App() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    console.log(count);
+  }, []); // react-hook 경고 뜨는지 확인
+
+  const handleClick = () => {
+    setItems((prev) => [...prev, "new item"]);
+  };
 
   return (
     <div>
-      {datas.map((data) => {
-        return (
-          // map()메서드 안에서는 고유한 key프로퍼티값이 필요하다.
-          <div key={data.id}>
-            {data.name} & {data.age}&{data.id}
-          </div>
-        );
-      })}
+      <h1>{title}</h1>
+      <p>Count: {count}</p>
+      <div onClick={handleClick}>Click me</div>
+      <ul>
+        {items.map((item, index) => (
+          // key 누락으로 경고 확인 후 =>  <li key={index}>{item}</li> key index 오류 확인
+          <li>{item}</li>
+        ))}
+      </ul>
+      <img src="das" /> {/* 접근성 오류 뜨는지 확인 */}
     </div>
   );
 }
-
-export default App;
