@@ -1,21 +1,27 @@
 import "./App.css";
 import ListItem from "./ListItem";
+import { useState } from "react";
 
 function App() {
-  //datas배열
-  const datas = [
+  //useState함수 사용하기
+  const [datas, setDatas] = useState([
     { id: "John", name: "John", age: 20 },
     { id: "Bob", name: "Bob", age: 30 },
     { id: "Jane", name: "Jane", age: 35 },
     { id: "Alice", name: "Alice", age: 29 },
-  ];
+  ]);
+
   return (
-    <>
-      {/* 각 요소들을 순회하며 ListItem컴포넌트를 랜더링  */}
+    <div>
       {datas.map((data) => {
-        return <ListItem key={data.id} data={data}></ListItem>;
+        return (
+          // map()메서드 안에서는 고유한 key프로퍼티값이 필요하다. 
+          <div key={data.id}>
+            {data.name} & {data.age}
+          </div>
+        );
       })}
-    </>
+    </div>
   );
 }
 
