@@ -5,8 +5,9 @@ import "./App.css";
 - 각각의 버튼에 해당하는 동작을 별도의 함수로 처리
 */
 function App() {
-  // React의 useState 훅을 사용하여 counter 상태 및 상태 변경 함수 선언
+  // React의 useState 훅을 사용하여 counter,input 상태 및 상태 변경 함수 선언
   const [counter, setCounter] = useState(0);
+  const [inputValue, setInputValue] = useState(0);
 
   // 버튼 컴포넌트에 전달할 클릭 이벤트 핸들러 함수 정의
   const plusCounter = () => {
@@ -17,6 +18,13 @@ function App() {
   };
   return (
     <>
+      {/* 입력 컴포넌트에, input,setInput전달
+    setCount도 함께 전달해서 count값 바뀌도록 포함시켰음 */}
+      <CounterInput
+        input={inputValue}
+        set={setInputValue}
+        setCount={setCounter}
+      ></CounterInput>
       <Counter counter={counter}></Counter>
       <PlusBtn plusCounter={plusCounter}></PlusBtn>
       <MinusBtn minusCounter={minusCounter}></MinusBtn>
@@ -35,5 +43,30 @@ function PlusBtn({ plusCounter }) {
 }
 function MinusBtn({ minusCounter }) {
   return <button onClick={minusCounter}>-</button>;
+}
+
+//CounterInput 컴포넌트 : 사용자에게 입력받은 숫자데이터를 counter 변수로 초기화
+function CounterInput({ input, set, setCount }) {
+  return (
+    <>
+      <input
+        type="number"
+        //input 상태의 값을 input 요소의 value로 설정하여 화면에 표시
+        value={input}
+        //사용자가 입력한 값으로 input 상태를 업데이트하여, 입력창과 상태 동기화
+        onChange={(e) => {
+          set(e.target.value);
+        }}
+      ></input>
+      <button
+        onClick={() => {
+          //버튼 클릭시 input상태 값을 부모 컴포넌트의 counter상태와 동기화 시키기.
+          setCount(input);
+        }}
+      >
+        입력
+      </button>
+    </>
+  );
 }
 export default App;
