@@ -1,12 +1,56 @@
-# React + Vite
+### vite script 명령어 차이
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+```java
+"scripts": {
+  "dev": "vite",
+  "build": "vite build",
+  "start": "vite preview"
+}
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### vite (개발용 웹서버)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 브라우저는 `http` 프로토콜을 통해 웹 서버에서 `html, js, css` 파일을 가져오는 웹서버 필요
+- `vite`가 내 컴퓨터에 설치된 `node.js`를 활용해 하나의 웹 서버를 띄워준다.
+- 여기서 개발 진행 하는 것
+
+### dev ( npm run dev )
+
+---
+
+- 현재 작업중인 파일들을 `esbuild + ESM` 을 활용하여 웹서버 실행하는 명령어
+- **번들러 : `esbuild`**
+- 내 코드 변경점을 실시간으로 캐치하여 브라우저에 바로 연동이 됨.
+- **포트번호 5173**
+
+### build ( npm run build )
+
+---
+
+- 브라우저는 **`JSX`파일을 못읽어** → 브라우저가 읽을 수 있게 **`.js, .html, .css` 파일들로 변환**해주는 역할
+- 변환작업은  **`rollup.js`** 사용되어 → 파일 변환 결과물이 **`./dist`** 폴더에 저장이 된다.
+
+### preview ( npm run preview )
+
+---
+
+- 웹서버가 읽을 수 있는 코드로 변환된 폴더 `./dist` 를 웹서버에 띄운다.
+- **번들러 : `rollup.js`**
+- **포트번호 4173**
+
+
+#### **💡`run dev`랑 `run preview` 둘다 똑같이 화면에 랜더링 되는 거 아님?**
+
+---
+
+
+❌ 애초에 번들러가 다름 
+
+→ 그러다보니 서로 결과물이 **잘 작동된다는 보장이 없다**는 것도 `vite` 팀에서 인지하고 있는 상황
+
+→ 💡그래서 이런 불편함을 해결하기 위해 , 한큐의 명령어로 **개발서버빌드+프로덕션 빌드  모두 다 사용 가능** 하도록 [`rolldown`](https://rolldown.rs/) 이라는 번들러를 만들고 있는 중 !
+
