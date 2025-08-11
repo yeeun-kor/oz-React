@@ -8,36 +8,12 @@ function App() {
     { id: 3, content: "피크민 하기" },
   ]);
 
-  //input상태 관리
-  const [inputValue, setInputValue] = useState("");
-
   return (
     <>
       <h1>todoList _ yeeun</h1>
       <TodoList todoList={todoList}></TodoList>
       <hr />
-      <input
-        type="text"
-        value={inputValue}
-        placeholder="할 일을 입력하기."
-        onChange={(e) => {
-          setInputValue(e.target.value);
-        }}
-      />
-      <button
-        onClick={() => {
-          const newTodo = {
-            id: Number(new Date()),
-            content: inputValue,
-          };
-
-          const newTodoList = [...todoList, newTodo];
-          setTodoList(newTodoList);
-          setInputValue(""); //input창 비워주기
-        }}
-      >
-        추가하기
-      </button>
+      <Input todoList={todoList} setTodoList={setTodoList}></Input>
     </>
   );
 }
@@ -60,4 +36,35 @@ function List({ todo }) {
   return <li>{todo.content}</li>;
 }
 
+//input 컴포넌트
+function Input({ todoList, setTodoList }) {
+  //input상태 관리
+  const [inputValue, setInputValue] = useState("");
+  return (
+    <div>
+      <input
+        type="text"
+        value={inputValue}
+        placeholder="할 일을 입력하기."
+        onChange={(e) => {
+          setInputValue(e.target.value);
+        }}
+      />
+      <button
+        onClick={() => {
+          const newTodo = {
+            id: Number(new Date()),
+            content: inputValue,
+          };
+
+          const newTodoList = [...todoList, newTodo];
+          setTodoList(newTodoList);
+          setInputValue(""); //input창 비워주기
+        }}
+      >
+        추가하기
+      </button>
+    </div>
+  );
+}
 export default App;
