@@ -7,10 +7,9 @@ function App() {
 
   //상태관리 이벤트 핸들러
   const handler = () => {
-    const newArr = arr.slice();
-    newArr.push(90);
-    setArr(newArr);
-    console.log(arr);
+    setArr([...arr, 10, 11]);
+    //...arr스프레드 문법을 사용하여 이전 주소값의 친구들을 그대로 불러모은다.
+    console.log(arr); //1,2,3,4,5,10,11
   };
   return (
     <>
