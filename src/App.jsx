@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <h1>todoList _ yeeun</h1>
-      <TodoList todoList={todoList}></TodoList>
+      <TodoList todoList={todoList} setTodoList={setTodoList}></TodoList>
       <hr />
       <Input todoList={todoList} setTodoList={setTodoList}></Input>
     </>
@@ -19,12 +19,12 @@ function App() {
 }
 
 //컴포넌트 분리하기
-function TodoList({ todoList }) {
+function TodoList({ todoList, setTodoList }) {
   return (
     <>
       <ol>
         {todoList.map((todo) => (
-          <List todo={todo} key={todo.id}></List>
+          <List setTodoList={setTodoList} todo={todo} key={todo.id}></List>
         ))}
       </ol>
     </>
@@ -32,8 +32,46 @@ function TodoList({ todoList }) {
 }
 
 //리스트 컴포넌트
-function List({ todo }) {
-  return <li>{todo.content}</li>;
+function List({ todo, setTodoList }) {
+  //수정 상태
+  const [inputValue, setInputValue] = useState("");
+
+  return (
+    <>
+      <li>
+        {todo.content}
+        {/* 수정로직 */}
+        <input
+          type="text"
+          value={inputValue}
+          placeholder="수정내용"
+          onChange={(e) => {
+            setInputValue(e.target.value);
+          }}
+        />
+        <button
+          onClick={() => {
+            if (!inputValue.trim()) return; // 공백 방지
+            setTodoList((prev) =>
+              prev.map((elm) =>
+                elm.id === todo.id ? { ...elm, content: inputValue } : elm
+              )
+            );
+          }}
+        >
+          수정하기
+        </button>
+        {/* 삭제로직 */}
+        <button
+          onClick={() => {
+            setTodoList((prev) => prev.filter((elm) => elm.id !== todo.id));
+          }}
+        >
+          삭제
+        </button>
+      </li>
+    </>
+  );
 }
 
 //input 컴포넌트
@@ -43,6 +81,8 @@ function Input({ todoList, setTodoList }) {
 
   //onClick이벤트 (버튼추가하면 배열 새롭게 생성)
   const addTodo = () => {
+    if (!inputValue.trim()) return; // 공백 방지
+
     const newTodo = {
       id: Number(new Date()),
       content: inputValue,
