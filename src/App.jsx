@@ -7,10 +7,9 @@ function App() {
 
   //상태관리 이벤트 핸들러
   const handler = () => {
-    // setArr([6, 7, 8, 9, 10]); //계속 랜더링 된다.
-    //기존 배열에 push하면 주소가 바뀌면서 랜더링이 될까?
-    arr.push(6);
-    setArr(arr); //주소가 바뀌지 않아서 랜더링이 안된다.
+    const newArr = arr.slice();
+    newArr.push(90);
+    setArr(newArr);
     console.log(arr);
   };
   return (
