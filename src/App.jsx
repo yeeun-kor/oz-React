@@ -22,11 +22,11 @@ function App() {
 function TodoList({ todoList }) {
   return (
     <>
-      <ul>
+      <ol>
         {todoList.map((todo) => (
           <List todo={todo} key={todo.id}></List>
         ))}
-      </ul>
+      </ol>
     </>
   );
 }
@@ -40,6 +40,19 @@ function List({ todo }) {
 function Input({ todoList, setTodoList }) {
   //input상태 관리
   const [inputValue, setInputValue] = useState("");
+
+  //onClick이벤트 (버튼추가하면 배열 새롭게 생성)
+  const addTodo = () => {
+    const newTodo = {
+      id: Number(new Date()),
+      content: inputValue,
+    };
+
+    const newTodoList = [...todoList, newTodo];
+    setTodoList(newTodoList);
+    setInputValue(""); //input창 비워주기
+  };
+
   return (
     <div>
       <input
@@ -49,21 +62,14 @@ function Input({ todoList, setTodoList }) {
         onChange={(e) => {
           setInputValue(e.target.value);
         }}
-      />
-      <button
-        onClick={() => {
-          const newTodo = {
-            id: Number(new Date()),
-            content: inputValue,
-          };
-
-          const newTodoList = [...todoList, newTodo];
-          setTodoList(newTodoList);
-          setInputValue(""); //input창 비워주기
+        //엔터하면 배열 새롭게 생성이 되는 로직
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            addTodo();
+          }
         }}
-      >
-        추가하기
-      </button>
+      />
+      <button onClick={addTodo}>추가하기</button>
     </div>
   );
 }
