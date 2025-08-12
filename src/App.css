@@ -40,3 +40,13 @@
 .read-the-docs {
   color: #888;
 }
+
+.happy {
+  color: palevioletred;
+}
+.normal {
+  color: aqua;
+}
+.sad {
+  color: rgb(0, 255, 42);
+}
