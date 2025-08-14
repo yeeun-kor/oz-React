@@ -20,6 +20,8 @@ function App() {
         <div> {elm.content}</div>
       ))}
       <MouseFollwer></MouseFollwer>
+      <ScrollIndicator></ScrollIndicator>
+      <div style={{ height: "300vh" }}></div>
     </>
   );
 }
@@ -50,7 +52,7 @@ const MouseFollwer = () => {
   return (
     <div
       style={{
-        position: "absolute",
+        position: "fixed",
         top: position.y,
         left: position.x,
         width: "40px",
@@ -63,4 +65,41 @@ const MouseFollwer = () => {
   );
 };
 
+//🚀스크롤 인디케이터 컴포넌트 생성
+//ScrollIndicator? : 화면의 전체 길이와, 스크롤이 내려간 길이의 비율을 계산하여 %로 화면 상단 부분에 유동적으로 동기화 시켜서 보여주는 작업.
+const ScrollIndicator = () => {
+  //상단 스크롤의 가로길이를 상태로 설정
+  const [scrollWidth, setScrollWidth] = useState(0);
+  //상태관리
+  useEffect(() => {
+    //이벤트 핸들러
+    const scrollHandler = () => {
+      //내가 스크롤 얼마나 내렸는지
+      const scrollTop = window.scrollY;
+      //현재 화면의 높이( html문서의 높이-현재 화면의 높이)
+      const windowHeight =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      //현재 스크롤창이 문서의 높이중 몇퍼센트를 차지하는지 100분율 계산
+      const scrollPercantage = (scrollTop / windowHeight) * 100;
+      setScrollWidth(scrollPercantage);
+    };
+    window.addEventListener("scroll", scrollHandler);
+    return () => {
+      window.removeEventListener("scroll", scrollHandler);
+    };
+  }, []);
+  return (
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: `${scrollWidth}%`,
+        height: "10px",
+        backgroundColor: "red",
+      }}
+    ></div>
+  );
+};
 export default App;
