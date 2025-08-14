@@ -16,6 +16,9 @@ function App() {
         리랜더링이 즉각적으로 반영되지 않고, 최종값만 반영이 되는, 직접 돔을
         조작함.<UseRefInput></UseRefInput>
       </h5>
+      <hr />
+      <h3>useRef로 매번 리랜더링시 변수초기화 막을 수 있다.</h3>
+      <Counter></Counter>
     </>
   );
 }
@@ -48,6 +51,45 @@ const UseRefInput = () => {
       <input ref={inputRef}></input>
       <button onClick={getInputRefVal}>useRef로 최종값 갖고오기!</button>
       <button onClick={focusInput}>포커스온!</button>
+    </div>
+  );
+};
+const Counter = () => {
+  const [count, setCount] = useState(0);
+  const refNum = useRef(null);
+  return (
+    <div>
+      <h4>countNumber : {count}</h4>
+      <button
+        onClick={() => {
+          setCount((prev) => prev + 1);
+          console.log(`PLUS : ${count}`);
+        }}
+      >
+        Plus
+      </button>
+      <button
+        onClick={() => {
+          setCount((prev) => prev + -1);
+          console.log(`MINUS : ${count}`);
+        }}
+      >
+        Minus
+      </button>
+      <button
+        onClick={() => {
+          refNum.current = count;
+        }}
+      >
+        useRef값저장
+      </button>
+      <button
+        onClick={() => {
+          console.log(`useRef로 저장한 값 : ${refNum.current}`);
+        }}
+      >
+        SHOWuseRef
+      </button>
     </div>
   );
 };
